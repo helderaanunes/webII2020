@@ -2,16 +2,11 @@
 require_once './Usuario.php';
 require_once './BDPDO.php';
 class UsuarioDAO {
-    
     public static $instance;
- 
-    private function __construct() {
-    }
- 
+    private function __construct() {}
     public static function getInstance() {
         if (!isset(self::$instance))
             self::$instance = new UsuarioDAO();
- 
         return self::$instance;
     }
     public function insert(Usuario $usuario){
@@ -25,12 +20,14 @@ class UsuarioDAO {
             $p_sql->bindValue(":email", $usuario->getEmail());
             $p_sql->bindValue(":tipo", $usuario->getTipo());
             //iremos critografar a senha para md5, asism o usuário terá
-            //mais segurança, já que frequentemente usamos a mesma senha para
+            //mais segurança, já que frequentemente usamos a mesma 
+            //senha para
             //diversas aplicações.
             $p_sql->bindValue(":senha", md5($usuario->getSenha()));
             return $p_sql->execute();
         } catch (Exception $e) {
-            print "Erro ao executar a função de salvar".$e->getMessage();
+            print "Erro ao executar a função de salvar".
+                    $e->getMessage();
         }
     }
     public function update($usuario){
